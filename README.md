@@ -1,5 +1,5 @@
-# Studyd8 
-An app that allows students to find other students to study with based on their college and the classes they are taking  
+# StudyD8 
+An Android application which helps college students find study partners in classes
 # Core Functionality:
 
   Create a profile with personal info + school + classes you are taking + major + year in school + prefered study habits 
