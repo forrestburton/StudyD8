@@ -4,8 +4,10 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Patterns;
@@ -27,10 +29,18 @@ public class Login extends AppCompatActivity {
     Button loginRegisterButton,loginButton;
     FirebaseAuth fAuth;
     TextView forgotPassword;
+
+    private SharedPreferences prefs;
+    private SharedPreferences.Editor editor;
+    public int totalCount;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        prefs = getPreferences(Context.MODE_PRIVATE);
+        editor = prefs.edit();
 
 
         loginUserPassword = findViewById(R.id.loginUserPassword);
@@ -99,7 +109,7 @@ public class Login extends AppCompatActivity {
                     return;
                 }
                 if(password.length()<1){
-                    loginUserPassword.setError("Please enter you password");
+                    loginUserPassword.setError("Please enter your password");
                     return;
                 }
                 fAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -107,11 +117,18 @@ public class Login extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
                             Toast.makeText(getApplicationContext(),"Login Successful",Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(getApplicationContext(),MainActivity.class));
+                            totalCount = prefs.getInt("counter", 0);
+                            totalCount++;
+                            editor.putInt("counter", totalCount);
+                            editor.commit();
+                            if(totalCount == 1)
+                                startActivity(new Intent(getApplicationContext(), ViewProfile.class));
+                            else
+                                startActivity(new Intent(getApplicationContext(), MainActivity.class));
                             finish();
                         }
                         else{
-                            Toast.makeText(getApplicationContext(),"Login failed due to "+task.getException().getMessage(),Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(),"Login failed due to " + task.getException().getMessage(),Toast.LENGTH_SHORT).show();
                         }
                     }
                 });

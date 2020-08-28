@@ -19,16 +19,15 @@ import com.google.firebase.auth.FirebaseUser;
 import static com.google.firebase.auth.FirebaseAuth.getInstance;
 
 public class MainActivity extends AppCompatActivity {
-    TextView welcomeText, unverifiedText;
+    TextView welcomeText, unverifiedText, editProfile, courseSearch, StudyBuds, messages;
     FirebaseAuth fAuth;
     Button logoutButton,resendEmailButton;
-
+    //  boolean has
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         try {
             welcomeText = findViewById(R.id.welcomeText);
             logoutButton = findViewById(R.id.logoutButton);
@@ -40,11 +39,11 @@ public class MainActivity extends AppCompatActivity {
             final FirebaseUser user = fAuth.getCurrentUser();
 
 
-            if (fAuth.getCurrentUser() == null) {
-                startActivity(new Intent(getApplicationContext(), Login.class));
+            if(fAuth.getCurrentUser()==null){
+                startActivity(new Intent(getApplicationContext(),Login.class));
                 finish();
             }
-            if (!user.isEmailVerified()) {
+            if(!user.isEmailVerified()){
                 unverifiedText.setVisibility(View.VISIBLE);
                 resendEmailButton.setVisibility(View.VISIBLE);
                 resendEmailButton.setOnClickListener(new View.OnClickListener() {
@@ -53,12 +52,12 @@ public class MainActivity extends AppCompatActivity {
                         user.sendEmailVerification().addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
-                                Toast.makeText(getApplicationContext(), "Please check your email", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(),"Please check your email", Toast.LENGTH_SHORT).show();
                             }
                         }).addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
-                                Toast.makeText(getApplicationContext(), "Unable to send verification email", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(),"Unable to send verification email", Toast.LENGTH_SHORT).show();
                             }
                         });
                     }
@@ -68,19 +67,41 @@ public class MainActivity extends AppCompatActivity {
             logoutButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    FirebaseAuth.getInstance().signOut();
-                    startActivity(new Intent(getApplicationContext(), Login.class));
+                    FirebaseAuth.getInstance().signOut( );
+                    startActivity(new Intent(getApplicationContext(),Login.class));
                     finish();
                 }
             });
             assert user != null;
-            welcomeText.setText("hello " + user.getEmail());
+            welcomeText.setText("Welcome " + user.getEmail());
 
-        } catch (Exception e) {
+            editProfile = findViewById(R.id.Profile);
+            courseSearch = findViewById(R.id.CourseSearch);
+            messages = findViewById(R.id.MessagesCenter);
+            StudyBuds = findViewById(0);
+
+            editProfile.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View view)
+                {
+                    startActivity(new Intent(getApplicationContext(), ViewProfile.class));
+                }
+            });
+
+            courseSearch.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View view)
+                {
+                    startActivity(new Intent(getApplicationContext(), UniversitySearch.class));
+                }
+            });
+
+
+        }
+        catch (Exception e){
 //            Toast.makeText(getApplicationContext(),"Unfortunately an error occurred "+e.getMessage(),Toast.LENGTH_LONG).show();
         }
-
     }
 }
-
-//END
