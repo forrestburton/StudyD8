@@ -1,6 +1,7 @@
 package com.SAP.studyd8;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -16,11 +17,15 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class ClassSearch extends AppCompatActivity {
 
+    private FirebaseFirestore firebaseFirestore;
     ListView lvClasses;
     CustomAdapter classAdapter;
 
@@ -35,6 +40,17 @@ public class ClassSearch extends AppCompatActivity {
         setContentView(R.layout.activity_class_search);
 
         lvClasses = findViewById(R.id.lvClasses);
+
+        //Get name of university selected
+        Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+        String currentUniversity;
+        if(bundle != null) {
+            currentUniversity = bundle.getString("university");
+        }
+
+        firebaseFirestore = FirebaseFirestore.getInstance();
+        //Query query = firebaseFirestore.collection();
 
         for (int i = 0; i < names.length; i++) {
             ClassModel classModel = new ClassModel(codes[i], names[i]);

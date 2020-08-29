@@ -144,6 +144,7 @@ public class UniversitySearch extends AppCompatActivity {
 
                     //start class search when a college is clicked
                     Intent intent = new Intent(UniversitySearch.this, ClassSearch.class);
+                    intent.putExtra("university",currentUniversity);
                     startActivity(intent);
                 }
             });
