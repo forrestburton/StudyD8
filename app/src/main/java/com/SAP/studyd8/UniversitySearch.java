@@ -33,7 +33,7 @@ public class UniversitySearch extends AppCompatActivity {
             R.drawable.northcarolina_logo, R.drawable.boston_logo, R.drawable.princeton_logo, R.drawable.berkeley_logo, R.drawable.chapman_logo,
             R.drawable.columbia_logo, R.drawable.usc_logo};
 
-    String names[] = {"University Of California, Los Angeles", "University of California, Santa Barbara", "Yale", "University of Washington", "Stanford",
+    String names[] = {"University of California, Los Angeles", "University of California, Santa Barbara", "Yale", "University of Washington", "Stanford",
             "Western Washington University", "Daffodil International University", "Harvard University", "University of Alberta", "Johns Hopkins University",
             "UNC Charlotte", "Virginia Tech", "University of Illinois Urbana-Champaign", "Oregon State University", "Texas A&M University",
             "North Carolina State University", "Boston University", "Princeton University", "University of California, Berkeley", "Chapman University",

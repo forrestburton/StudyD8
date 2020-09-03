@@ -3,35 +3,50 @@ package com.SAP.studyd8;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class ClassSearch extends AppCompatActivity {
 
-    private FirebaseFirestore firebaseFirestore;
+    private static final String TAG = "" ;
+    String currentUniversity = "";
+    private FirebaseFirestore mFirestore;
     ListView lvClasses;
     CustomAdapter classAdapter;
 
     String codes[] = {"1111", "2222", "7777"};
     String names[] = {"CS 31", "CS 32", "PHIL 7"};
-    List<ClassModel> classList = new ArrayList<>();    //Change to firebase for classes
+    List<ClassModel> classList = new ArrayList<>();
 
 
     @Override
@@ -44,23 +59,33 @@ public class ClassSearch extends AppCompatActivity {
         //Get name of university selected
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
-        String currentUniversity;
         if(bundle != null) {
             currentUniversity = bundle.getString("university");
         }
 
-        firebaseFirestore = FirebaseFirestore.getInstance();
-        //Query query = firebaseFirestore.collection();
+        //Get classes from firebase
+        mFirestore = FirebaseFirestore.getInstance();
+        mFirestore.collection(currentUniversity)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Log.d(TAG, document.getId() + " => " + document.getData());
+                                String className = document.getString("Name");
+                                String id = document.getString("ID");
 
-        for (int i = 0; i < names.length; i++) {
-            ClassModel classModel = new ClassModel(codes[i], names[i]);
-            classList.add(classModel);
-        }
-
-        classAdapter = new CustomAdapter(classList, this);
-        lvClasses.setAdapter(classAdapter);
-
-
+                                ClassModel classModel = new ClassModel(id, className);
+                                classList.add(classModel);
+                            }
+                        } else {
+                            Log.d(TAG, "Error getting documents: ", task.getException());
+                        }
+                        classAdapter = new CustomAdapter(classList, getApplicationContext());
+                        lvClasses.setAdapter(classAdapter);
+                    }
+                });
     }
 
 
