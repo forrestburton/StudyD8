@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">StudyD8</string>
+    <string name="enter_class_name_ex_math_32">Enter Class Name. Ex: MATH 32</string>
+    <string name="enter_class_code_ex_262211210">Enter Class Code. Ex: 262211210</string>
 </resources>

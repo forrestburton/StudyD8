@@ -27,6 +27,7 @@ import com.google.firebase.auth.FirebaseAuth;
 public class Login extends AppCompatActivity {
     EditText loginUserEmail,loginUserPassword;
     Button loginRegisterButton,loginButton;
+
     FirebaseAuth fAuth;
     TextView forgotPassword;
 

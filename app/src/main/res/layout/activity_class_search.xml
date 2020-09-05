@@ -13,11 +13,18 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:fontFamily="monospace"
         android:text="Class Search"
-        android:textStyle="bold"
         android:textColor="@android:color/black"
         android:textSize="32sp"
-        android:layout_marginBottom="5dp"/>
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/addButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add Class" />
 
     <ListView
         android:id="@+id/lvClasses"

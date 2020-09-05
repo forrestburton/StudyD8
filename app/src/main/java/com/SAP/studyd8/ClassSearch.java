@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ListView;
@@ -43,6 +44,7 @@ public class ClassSearch extends AppCompatActivity {
     private FirebaseFirestore mFirestore;
     ListView lvClasses;
     CustomAdapter classAdapter;
+    Button button;
 
     String codes[] = {"1111", "2222", "7777"};
     String names[] = {"CS 31", "CS 32", "PHIL 7"};
@@ -55,6 +57,7 @@ public class ClassSearch extends AppCompatActivity {
         setContentView(R.layout.activity_class_search);
 
         lvClasses = findViewById(R.id.lvClasses);
+        button = findViewById(R.id.addButton);
 
         //Get name of university selected
         Intent intent = getIntent();
@@ -86,6 +89,14 @@ public class ClassSearch extends AppCompatActivity {
                         lvClasses.setAdapter(classAdapter);
                     }
                 });
+
+        //if button clicked go to add class screen
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(),AddClass.class));
+            }
+        });
     }
 
 
