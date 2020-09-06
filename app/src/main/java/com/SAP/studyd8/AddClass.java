@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -25,6 +26,7 @@ public class AddClass extends AppCompatActivity {
 
     private EditText editTextName;
     private EditText editTextID;
+    private Button button;
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -37,6 +39,7 @@ public class AddClass extends AppCompatActivity {
 
         editTextName = findViewById(R.id.getClassName);
         editTextID  = findViewById(R.id.getClassID);
+        button = findViewById(R.id.finishButton);
     }
 
     public void saveNote(View v) {
@@ -69,5 +72,16 @@ public class AddClass extends AppCompatActivity {
                         Log.d(TAG, e.toString());
                     }
                 });
+
+        //if button clicked go to add class screen
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //start class search when a college is clicked
+                Intent intent = new Intent(AddClass.this, ClassSearch.class);
+                intent.putExtra("university", currentUniversity);
+                startActivity(intent);
+            }
+        });
     }
 }
