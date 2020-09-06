@@ -46,8 +46,6 @@ public class ClassSearch extends AppCompatActivity {
     CustomAdapter classAdapter;
     Button button;
 
-    String codes[] = {"1111", "2222", "7777"};
-    String names[] = {"CS 31", "CS 32", "PHIL 7"};
     List<ClassModel> classList = new ArrayList<>();
 
 
@@ -94,7 +92,10 @@ public class ClassSearch extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(),AddClass.class));
+                //start class search when a college is clicked
+                Intent intent = new Intent(ClassSearch.this, AddClass.class);
+                intent.putExtra("university",currentUniversity);
+                startActivity(intent);
             }
         });
     }
