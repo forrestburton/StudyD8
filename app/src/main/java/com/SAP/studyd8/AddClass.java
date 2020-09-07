@@ -21,8 +21,8 @@ import java.util.Map;
 public class AddClass extends AppCompatActivity {
     private static final String TAG = "AddClass";
 
-    private static final String KEY_TITLE = "title";
-    private static final String KEY_DESCRIPTION = "description";
+    private static final String KEY_ID = "ID";
+    private static final String KEY_NAME = "Name";
 
     private EditText editTextName;
     private EditText editTextID;
@@ -47,8 +47,8 @@ public class AddClass extends AppCompatActivity {
         String id = editTextID.getText().toString();
 
         Map<String, Object> note = new HashMap<>();
-        note.put(KEY_DESCRIPTION, id);
-        note.put(KEY_TITLE, name);
+        note.put(KEY_ID, id);
+        note.put(KEY_NAME, name);
 
         //Get name of university selected
         Intent intent = getIntent();
