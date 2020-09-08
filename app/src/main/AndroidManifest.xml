@@ -10,7 +10,8 @@
         android:supportsRtl="true"
         android:testOnly="false"
         android:theme="@style/AppTheme">
-        <activity android:name=".AddClass"></activity>
+        <activity android:name=".ProfileEdit"></activity>
+        <activity android:name=".AddClass" />
         <activity android:name=".ViewProfile" />
         <activity android:name=".ClassSearch" />
         <activity android:name=".UniversitySearch" />
