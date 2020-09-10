@@ -63,6 +63,11 @@ public class AddClass extends AppCompatActivity {
                     @Override
                     public void onSuccess(Void aVoid) {
                         Toast.makeText(AddClass.this, "Class added", Toast.LENGTH_SHORT).show();
+
+                        //start class search when a college is clicked
+                        Intent intent = new Intent(AddClass.this, ClassSearch.class);
+                        intent.putExtra("university", currentUniversity);
+                        startActivity(intent);
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -72,16 +77,5 @@ public class AddClass extends AppCompatActivity {
                         Log.d(TAG, e.toString());
                     }
                 });
-
-        //if button clicked go to add class screen
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //start class search when a college is clicked
-                Intent intent = new Intent(AddClass.this, ClassSearch.class);
-                intent.putExtra("university", currentUniversity);
-                startActivity(intent);
-            }
-        });
     }
 }
