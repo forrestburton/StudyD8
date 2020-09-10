@@ -9,11 +9,13 @@
 
     <TextView
         android:id="@+id/profileTopText"
-        android:layout_width="221dp"
+        android:layout_width="270dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:text="Your profile"
         android:textSize="36sp"
+        android:fontFamily="monospace"
+        android:textColor="@android:color/black"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -27,8 +29,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:text="user"
+        android:layout_marginTop="0dp"
+        android:text="Username:"
         android:textSize="18sp"
+        android:fontFamily="monospace"
+        android:textColor="@android:color/black"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -42,7 +47,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:text="Name"
+        android:layout_marginTop="20dp"
+        android:text="Name:"
+        android:fontFamily="monospace"
+        android:textColor="@android:color/black"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -57,8 +65,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:text="university"
+        android:layout_marginTop="40dp"
+        android:text="University: "
         android:textSize="18sp"
+        android:fontFamily="monospace"
+        android:textColor="@android:color/black"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -72,7 +83,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:text="major"
+        android:text="Major: "
+        android:layout_marginTop="60dp"
+        android:fontFamily="monospace"
+        android:textColor="@android:color/black"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -89,6 +103,9 @@
         android:layout_marginStart="16dp"
         android:text="Add Courses"
         android:textSize="16sp"
+        android:fontFamily="monospace"
+        android:layout_marginTop="100dp"
+        android:textColor="@android:color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -97,12 +114,16 @@
         app:layout_constraintVertical_bias="0.674" />
 
     <TextView
+        android:id="@+id/studyHabitsText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:text="Preferred Study Habits:"
+        android:text="Study Habits:"
+        android:layout_marginTop="90dp"
         android:textSize="18sp"
         android:textStyle="bold"
+        android:fontFamily="monospace"
+        android:textColor="@android:color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -110,19 +131,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.379" />
 
-    <EditText
-        android:id="@+id/studyHabitsBox"
-        android:layout_width="298dp"
-        android:layout_height="58dp"
-        android:hint="Preferred Study Habits "
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.137"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.433" />
+
 
     <TextView
         android:layout_width="wrap_content"
@@ -130,7 +139,10 @@
         android:layout_marginStart="16dp"
         android:text="Course List:"
         android:textSize="18sp"
+        android:layout_marginTop="100dp"
         android:textStyle="bold"
+        android:fontFamily="monospace"
+        android:textColor="@android:color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -138,19 +150,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.513" />
 
-    <Button
-        android:id="@+id/submitStudy"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:text="submit"
-        android:textSize="12sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.949"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.433" />
 
     <Button
         android:id="@+id/editButton"
@@ -161,9 +160,9 @@
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.916"
+        app:layout_constraintHorizontal_bias="0.886"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.061" />
+        app:layout_constraintVertical_bias="0.04" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

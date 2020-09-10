@@ -54,9 +54,8 @@ import java.util.Objects;
 
 public class ViewProfile extends AppCompatActivity {
 
-    TextView topText, username, name, university, major;
-    EditText studyHabits;
-    Button addCourses, submitStudy, editProfile;
+    TextView topText, username, name, university, major, studyHabits;
+    Button addCourses, editProfile;
     private String uid;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private DocumentReference ref;
@@ -71,10 +70,9 @@ public class ViewProfile extends AppCompatActivity {
         name = (TextView) findViewById(R.id.Name);
         university = (TextView) findViewById(R.id.university);
         major = (TextView) findViewById(R.id.major);
-        studyHabits = (EditText) findViewById(R.id.studyHabitsBox);
-        submitStudy = (Button) findViewById(R.id.submitStudy);
         addCourses = (Button) findViewById(R.id.addCourses);
         editProfile = (Button) findViewById(R.id.editButton);
+        studyHabits = (TextView)findViewById(R.id.studyHabitsText);
 
         uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
@@ -87,16 +85,7 @@ public class ViewProfile extends AppCompatActivity {
                 name.setText("Name: " + value.getString("firstName") + " " + value.getString("lastName"));
                 university.setText("University: " + value.getString("university"));
                 major.setText("Major: " + value.getString("major"));
-                studyHabits.setHint(value.getString("studyHabits"));
-            }
-        });
-
-        submitStudy.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String input = studyHabits.getText().toString().trim();
-                DocumentReference noteRef = db.collection("users").document(uid);
-                noteRef.update("studyHabits", input);
+                studyHabits.setText("Study Habits: "+ value.getString("studyHabits"));
             }
         });
 
