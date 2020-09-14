@@ -50,7 +50,7 @@ public class ProfileEdit extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_edit);
-        username = findViewById(R.id.profileUsername);
+        //username = findViewById(R.id.profileUsername);
         university = findViewById(R.id.profileUniversity);
         firstName = findViewById(R.id.profileFirstName);
         lastName = findViewById(R.id.profileLastName);
@@ -66,7 +66,7 @@ public class ProfileEdit extends AppCompatActivity {
         ref.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
-                username.setText(value.getString("username"));
+                //username.setText(value.getString("username"));
                 firstName.setText(value.getString("firstName"));
                 lastName.setText(value.getString("lastName"));
                 university.setText(value.getString("university"));
@@ -82,7 +82,7 @@ public class ProfileEdit extends AppCompatActivity {
             finishButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    user_username = username.getText().toString().trim();
+                  //  user_username = username.getText().toString().trim();
                     user_firstName = firstName.getText().toString().trim();
                     user_lastName = lastName.getText().toString().trim();
                     user_major = major.getText().toString().trim();
@@ -105,7 +105,7 @@ public class ProfileEdit extends AppCompatActivity {
         DocumentReference documentReference = fStore.collection("users").document(userId);
 
         Map<String, Object> user_data = new HashMap<>();
-        user_data.put("username", user_username);
+     //   user_data.put("username", user_username);
         user_data.put("firstName", user_firstName);
         user_data.put("lastName", user_lastName);
         user_data.put("major", user_major);
