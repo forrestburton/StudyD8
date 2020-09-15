@@ -45,11 +45,7 @@ public class Profile extends AppCompatActivity {
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
     String userId, user_username, user_firstName, user_lastName, user_major, user_university, user_studyHabits, comparison;
-    private DatabaseReference myRef;
-    private FirebaseDatabase mFirebaseDatabase;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private DocumentReference ref;
-    boolean inUse = true;
 
 
     @Override
@@ -85,7 +81,7 @@ public class Profile extends AppCompatActivity {
 
                     // username contains only letters and numbers
                     user_username = user_username.replaceAll("[^a-zA-Z0-9]", "");
-
+                    username.setText(user_username);
 
 
                     // unique username stuff - identifies if the username is unique
@@ -101,7 +97,7 @@ public class Profile extends AppCompatActivity {
 
                                     if(user.equalsIgnoreCase(user_username)){
                                         Log.d("TAG", "User Exists");
-                                        Toast.makeText(getApplicationContext(), "Username already taken", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(getApplicationContext(), "Please choose a unique username", Toast.LENGTH_SHORT).show();
                                     }
                                 }
                             }
@@ -135,6 +131,7 @@ public class Profile extends AppCompatActivity {
         user_data.put("major", user_major);
         user_data.put("university", user_university);
         user_data.put("studyHabits", user_studyHabits);
+        user_data.put("userId", userId);
 
 
         documentReference.set(user_data).addOnSuccessListener(new OnSuccessListener<Void>() {
