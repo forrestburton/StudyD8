@@ -35,8 +35,10 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Profile extends AppCompatActivity {
@@ -44,9 +46,10 @@ public class Profile extends AppCompatActivity {
     Button finishButton;
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
-    String userId, user_username, user_firstName, user_lastName, user_major, user_university, user_studyHabits, comparison;
+    String userId, user_username, user_firstName, user_lastName, user_major, user_university, user_studyHabits;
+    List<String> courses;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
-
+    private CollectionReference userRef = db.collection("users");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,29 +127,11 @@ public class Profile extends AppCompatActivity {
     {
         DocumentReference documentReference = fStore.collection("users").document(userId);
 
-        Map<String, Object> user_data = new HashMap<>();
-        user_data.put("username", user_username);
-        user_data.put("firstName", user_firstName);
-        user_data.put("lastName", user_lastName);
-        user_data.put("major", user_major);
-        user_data.put("university", user_university);
-        user_data.put("studyHabits", user_studyHabits);
-        user_data.put("userId", userId);
 
+        UserModel userModel = new UserModel(userId, user_username, user_firstName, user_lastName, user_major, user_university, user_studyHabits, courses);
 
-        documentReference.set(user_data).addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void aVoid) {
-                Toast.makeText(getApplicationContext(), "success", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                finish();
-
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(getApplicationContext(), "Failed", Toast.LENGTH_SHORT).show();
-            }
-        });
+        userRef.add(userModel);
+        Toast.makeText(getApplicationContext(), "success", Toast.LENGTH_SHORT).show();
+        startActivity(new Intent(getApplicationContext(), MainActivity.class));
     }
 }

@@ -24,7 +24,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -41,7 +43,9 @@ public class ClassSearch extends AppCompatActivity {
 
     private static final String TAG = "" ;
     String currentUniversity = "";
+    String userId;
     private FirebaseFirestore mFirestore;
+    private FirebaseAuth fAuth;
     ListView lvClasses;
     CustomAdapter classAdapter;
     Button button;
@@ -180,7 +184,11 @@ public class ClassSearch extends AppCompatActivity {
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    // String currentUniversity = classesFiltered.get(position).getName();
+                    // String currentClass = classesFiltered.get(position).getName();
+                    //mFirestore = FirebaseFirestore.getInstance();
+                    //fAuth = FirebaseAuth.getInstance();
+                    //userId = Objects.requireNonNull(fAuth.getCurrentUser()).getUid();
+                    //DocumentReference documentReference = mFirestore.collection("users").document(userId);
                 }
             });
 
