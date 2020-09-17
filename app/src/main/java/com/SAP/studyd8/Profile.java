@@ -42,11 +42,11 @@ import java.util.List;
 import java.util.Map;
 
 public class Profile extends AppCompatActivity {
-    EditText university, username, firstName, lastName, major, studyHabits;
+    EditText university_text, username_text, firstName_text, lastName_text, major_text, studyHabits_text;
     Button finishButton;
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
-    String userId, user_username, user_firstName, user_lastName, user_major, user_university, user_studyHabits;
+    String userId, username, firstName, lastName, major, university, studyHabits;
     List<String> courses;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private CollectionReference userRef = db.collection("users");
@@ -55,12 +55,12 @@ public class Profile extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
-        username = findViewById(R.id.profileUsername);
-        university = findViewById(R.id.profileUniversity);
-        firstName = findViewById(R.id.profileFirstName);
-        lastName = findViewById(R.id.profileLastName);
-        major = findViewById(R.id.profileMajor);
-        studyHabits = findViewById(R.id.profileStudyHabits);
+        username_text = findViewById(R.id.profileUsername);
+        university_text = findViewById(R.id.profileUniversity);
+        firstName_text = findViewById(R.id.profileFirstName);
+        lastName_text = findViewById(R.id.profileLastName);
+        major_text = findViewById(R.id.profileMajor);
+        studyHabits_text = findViewById(R.id.profileStudyHabits);
 
         fStore = FirebaseFirestore.getInstance();
         fAuth = FirebaseAuth.getInstance();
@@ -75,22 +75,22 @@ public class Profile extends AppCompatActivity {
             finishButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    user_username = username.getText().toString().trim();
-                    user_firstName = firstName.getText().toString().trim();
-                    user_lastName = lastName.getText().toString().trim();
-                    user_major = major.getText().toString().trim();
-                    user_university = university.getText().toString().trim();
-                    user_studyHabits = studyHabits.getText().toString().trim();
+                    username = username_text.getText().toString().trim();
+                    firstName = firstName_text.getText().toString().trim();
+                    lastName = lastName_text.getText().toString().trim();
+                    major = major_text.getText().toString().trim();
+                    university = university_text.getText().toString().trim();
+                    studyHabits = studyHabits_text.getText().toString().trim();
 
                     // username contains only letters and numbers
-                    user_username = user_username.replaceAll("[^a-zA-Z0-9]", "");
-                    username.setText(user_username);
+                    username = username.replaceAll("[^a-zA-Z0-9]", "");
+                    username_text.setText(username);
 
 
                     // unique username stuff - identifies if the username is unique
                     // doesn't move on if username is not unique
                     CollectionReference usersRef = FirebaseFirestore.getInstance().collection("users");
-                    Query query = usersRef.whereEqualTo("username", user_username);
+                    Query query = usersRef.whereEqualTo("username", username);
                     query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                         @Override
                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -98,7 +98,7 @@ public class Profile extends AppCompatActivity {
                                 for(DocumentSnapshot documentSnapshot : task.getResult()){
                                     String user = documentSnapshot.getString("username");
 
-                                    if(user.equalsIgnoreCase(user_username)){
+                                    if(user.equalsIgnoreCase(username)){
                                         Log.d("TAG", "User Exists");
                                         Toast.makeText(getApplicationContext(), "Please choose a unique username", Toast.LENGTH_SHORT).show();
                                     }
@@ -125,12 +125,10 @@ public class Profile extends AppCompatActivity {
 
     private void addUserData()
     {
-        DocumentReference documentReference = fStore.collection("users").document(userId);
-
-
-        UserModel userModel = new UserModel(userId, user_username, user_firstName, user_lastName, user_major, user_university, user_studyHabits, courses);
-
+        //create a user model containing all aspects of a users profile, then upload to firestore
+        UserModel userModel = new UserModel(userId, username, firstName, lastName, major, university, studyHabits, courses);
         userRef.add(userModel);
+
         Toast.makeText(getApplicationContext(), "success", Toast.LENGTH_SHORT).show();
         startActivity(new Intent(getApplicationContext(), MainActivity.class));
     }

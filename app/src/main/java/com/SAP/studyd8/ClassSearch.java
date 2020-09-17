@@ -23,6 +23,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
@@ -35,17 +37,22 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 public class ClassSearch extends AppCompatActivity {
 
     private static final String TAG = "" ;
     String currentUniversity = "";
-    String userId;
-    private FirebaseFirestore mFirestore;
-    private FirebaseAuth fAuth;
+    String userId, user_username, user_firstName, user_lastName, user_major, user_university, user_studyHabits;
+    List<String> courses;
+    private FirebaseFirestore mFirestore = FirebaseFirestore.getInstance();
+    private DocumentReference ref;
     ListView lvClasses;
     CustomAdapter classAdapter;
     Button button;
@@ -69,7 +76,7 @@ public class ClassSearch extends AppCompatActivity {
         }
 
         //Get classes from firebase
-        mFirestore = FirebaseFirestore.getInstance();
+        assert currentUniversity != null;
         mFirestore.collection(currentUniversity)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -184,11 +191,46 @@ public class ClassSearch extends AppCompatActivity {
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    // String currentClass = classesFiltered.get(position).getName();
-                    //mFirestore = FirebaseFirestore.getInstance();
-                    //fAuth = FirebaseAuth.getInstance();
-                    //userId = Objects.requireNonNull(fAuth.getCurrentUser()).getUid();
-                    //DocumentReference documentReference = mFirestore.collection("users").document(userId);
+                    //get class clicked on and store class ID     !!RETRIEVE OLD DATA FIRST??
+                    String currentClassID = classesFiltered.get(position).getClassCode();
+                    String [] temp = {currentClassID};
+                    courses = Arrays.asList(temp);
+
+                    //get users ID, then get document of specific user
+                    userId = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
+                    ref = mFirestore.collection("users").document(userId);
+
+                    //get user data from firestore
+                    ref.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                        @Override
+                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+                            user_username = documentSnapshot.getString("username");
+                            user_firstName = documentSnapshot.getString("firstName");
+                            user_lastName = documentSnapshot.getString("lastName");
+                            user_major = documentSnapshot.getString("major");
+                            user_university = documentSnapshot.getString("university");
+                            user_studyHabits = documentSnapshot.getString("studyHabits");
+                        }
+                    });
+
+                    //create new userModel with updated course list
+                    UserModel userModel = new UserModel(userId, user_username, user_firstName, user_lastName, user_major, user_university, user_studyHabits, courses);
+
+                    ref.set(userModel)
+                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    Toast.makeText(getApplicationContext(), "Course added", Toast.LENGTH_SHORT).show();
+                                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                                }
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Toast.makeText(getApplicationContext(), "An error has occured", Toast.LENGTH_SHORT).show();
+                                    Log.e(TAG, "onFailure: ", e);
+                                }
+                            });
                 }
             });
 

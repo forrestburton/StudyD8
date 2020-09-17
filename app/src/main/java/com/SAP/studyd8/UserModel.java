@@ -3,17 +3,17 @@ package com.SAP.studyd8;
 import java.util.List;
 
 public class UserModel {
-    String userId, user_username, user_firstName, user_lastName, user_major, user_university, user_studyHabits;
+    String userId, username, firstName, lastName, major, university, studyHabits;
     List<String> courses;
 
-    public UserModel(String userId, String user_username, String user_firstName, String user_lastName, String user_major, String user_university, String user_studyHabits, List<String> courses) {
+    public UserModel(String userId, String username, String firstName, String lastName, String major, String university, String studyHabits, List<String> courses) {
         this.userId = userId;
-        this.user_username = user_username;
-        this.user_firstName = user_firstName;
-        this.user_lastName = user_lastName;
-        this.user_major = user_major;
-        this.user_university = user_university;
-        this.user_studyHabits = user_studyHabits;
+        this.username = username;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.major = major;
+        this.university = university;
+        this.studyHabits = studyHabits;
         this.courses = courses;
     }
 
@@ -25,52 +25,52 @@ public class UserModel {
         this.userId = userId;
     }
 
-    public String getUser_username() {
-        return user_username;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUser_username(String user_username) {
-        this.user_username = user_username;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    public String getUser_firstName() {
-        return user_firstName;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setUser_firstName(String user_firstName) {
-        this.user_firstName = user_firstName;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    public String getUser_lastName() {
-        return user_lastName;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setUser_lastName(String user_lastName) {
-        this.user_lastName = user_lastName;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
-    public String getUser_major() {
-        return user_major;
+    public String getMajor() {
+        return major;
     }
 
-    public void setUser_major(String user_major) {
-        this.user_major = user_major;
+    public void setMajor(String major) {
+        this.major = major;
     }
 
-    public String getUser_university() {
-        return user_university;
+    public String getUniversity() {
+        return university;
     }
 
-    public void setUser_university(String user_university) {
-        this.user_university = user_university;
+    public void setUniversity(String university) {
+        this.university = university;
     }
 
-    public String getUser_studyHabits() {
-        return user_studyHabits;
+    public String getStudyHabits() {
+        return studyHabits;
     }
 
-    public void setUser_studyHabits(String user_studyHabits) {
-        this.user_studyHabits = user_studyHabits;
+    public void setStudyHabits(String studyHabits) {
+        this.studyHabits = studyHabits;
     }
 
     public List<String> getCourses() {
