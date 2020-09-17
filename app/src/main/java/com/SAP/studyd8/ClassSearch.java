@@ -49,7 +49,7 @@ public class ClassSearch extends AppCompatActivity {
 
     private static final String TAG = "" ;
     String currentUniversity = "";
-    String userId, user_username, user_firstName, user_lastName, user_major, user_university, user_studyHabits;
+    String userId, user_username, user_firstName, user_lastName, user_major, user_university, user_studyHabits, currentClassID, currentClassName;
     List<String> courses;
     private FirebaseFirestore mFirestore = FirebaseFirestore.getInstance();
     private DocumentReference ref;
@@ -192,9 +192,8 @@ public class ClassSearch extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     //get class clicked on and store class ID     !!RETRIEVE OLD DATA FIRST??
-                    String currentClassID = classesFiltered.get(position).getClassCode();
-                    String [] temp = {currentClassID};
-                    courses = Arrays.asList(temp);
+                    currentClassID = classesFiltered.get(position).getClassCode();
+                    currentClassName = classesFiltered.get(position).getName();
 
                     //get users ID, then get document of specific user
                     userId = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
@@ -211,6 +210,13 @@ public class ClassSearch extends AppCompatActivity {
                                     user_major = documentSnapshot.getString("major");
                                     user_university = documentSnapshot.getString("university");
                                     user_studyHabits = documentSnapshot.getString("studyHabits");
+
+                                    //update courses array
+                                    List<String> tempList = (List<String>) documentSnapshot.get("courses");
+                                    tempList.add(currentClassID);
+                                    tempList.add(currentClassName);
+                                    //String [] temp = (String[]) tempList.toArray();
+                                    courses = tempList;
 
                                     //create new userModel with updated course list
                                     UserModel userModel = new UserModel(userId, user_username, user_firstName, user_lastName, user_major, user_university, user_studyHabits, courses);
