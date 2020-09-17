@@ -201,15 +201,16 @@ public class ClassSearch extends AppCompatActivity {
                     ref = mFirestore.collection("users").document(userId);
 
                     //get user data from firestore
-                    ref.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                        @Override
-                        public void onSuccess(DocumentSnapshot documentSnapshot) {
-                            user_username = documentSnapshot.getString("username");
-                            user_firstName = documentSnapshot.getString("firstName");
-                            user_lastName = documentSnapshot.getString("lastName");
-                            user_major = documentSnapshot.getString("major");
-                            user_university = documentSnapshot.getString("university");
-                            user_studyHabits = documentSnapshot.getString("studyHabits");
+                    ref.get()
+                            .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                @Override
+                                public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                    user_username = documentSnapshot.getString("username");
+                                    user_firstName = documentSnapshot.getString("firstName");
+                                    user_lastName = documentSnapshot.getString("lastName");
+                                    user_major = documentSnapshot.getString("major");
+                                    user_university = documentSnapshot.getString("university");
+                                    user_studyHabits = documentSnapshot.getString("studyHabits");
                         }
                     });
 

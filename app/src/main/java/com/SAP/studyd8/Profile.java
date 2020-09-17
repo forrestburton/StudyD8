@@ -45,11 +45,10 @@ public class Profile extends AppCompatActivity {
     EditText university_text, username_text, firstName_text, lastName_text, major_text, studyHabits_text;
     Button finishButton;
     FirebaseAuth fAuth;
+    CollectionReference userRef;
     FirebaseFirestore fStore;
     String userId, username, firstName, lastName, major, university, studyHabits;
     List<String> courses;
-    private FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private CollectionReference userRef = db.collection("users");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,7 +68,7 @@ public class Profile extends AppCompatActivity {
             startActivity(new Intent(getApplicationContext(), Login.class));
             finish();
         }
-        userId = fAuth.getCurrentUser().getUid();
+
         finishButton = findViewById(R.id.finishButton);
         try {
             finishButton.setOnClickListener(new View.OnClickListener() {
@@ -125,9 +124,13 @@ public class Profile extends AppCompatActivity {
 
     private void addUserData()
     {
+        //get user id
+        userId = fAuth.getCurrentUser().getUid();
+        DocumentReference documentReference = fStore.collection("users").document(userId);
+
         //create a user model containing all aspects of a users profile, then upload to firestore
         UserModel userModel = new UserModel(userId, username, firstName, lastName, major, university, studyHabits, courses);
-        userRef.add(userModel);
+        documentReference.set(userModel);
 
         Toast.makeText(getApplicationContext(), "success", Toast.LENGTH_SHORT).show();
         startActivity(new Intent(getApplicationContext(), MainActivity.class));
