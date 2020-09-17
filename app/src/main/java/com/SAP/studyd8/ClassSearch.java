@@ -211,27 +211,28 @@ public class ClassSearch extends AppCompatActivity {
                                     user_major = documentSnapshot.getString("major");
                                     user_university = documentSnapshot.getString("university");
                                     user_studyHabits = documentSnapshot.getString("studyHabits");
+
+                                    //create new userModel with updated course list
+                                    UserModel userModel = new UserModel(userId, user_username, user_firstName, user_lastName, user_major, user_university, user_studyHabits, courses);
+
+                                    //update user profile with added course
+                                    ref.set(userModel)
+                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                @Override
+                                                public void onSuccess(Void aVoid) {
+                                                    Toast.makeText(getApplicationContext(), "Course added", Toast.LENGTH_SHORT).show();
+                                                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                                                }
+                                            })
+                                            .addOnFailureListener(new OnFailureListener() {
+                                                @Override
+                                                public void onFailure(@NonNull Exception e) {
+                                                    Toast.makeText(getApplicationContext(), "An error has occured", Toast.LENGTH_SHORT).show();
+                                                    Log.e(TAG, "onFailure: ", e);
+                                                }
+                                            });
                         }
                     });
-
-                    //create new userModel with updated course list
-                    UserModel userModel = new UserModel(userId, user_username, user_firstName, user_lastName, user_major, user_university, user_studyHabits, courses);
-
-                    ref.set(userModel)
-                            .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                @Override
-                                public void onSuccess(Void aVoid) {
-                                    Toast.makeText(getApplicationContext(), "Course added", Toast.LENGTH_SHORT).show();
-                                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                                }
-                            })
-                            .addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    Toast.makeText(getApplicationContext(), "An error has occured", Toast.LENGTH_SHORT).show();
-                                    Log.e(TAG, "onFailure: ", e);
-                                }
-                            });
                 }
             });
 
