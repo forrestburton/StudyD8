@@ -82,6 +82,48 @@ public class RemoveClasses extends AppCompatActivity {
         removeAll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //get users ID, then get document of specific user
+                userId = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
+                ref = mFirestore.collection("users").document(userId);
+
+                ref.get()
+                        .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                            @Override
+                            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                user_username = documentSnapshot.getString("username");
+                                user_firstName = documentSnapshot.getString("firstName");
+                                user_lastName = documentSnapshot.getString("lastName");
+                                user_major = documentSnapshot.getString("major");
+                                user_university = documentSnapshot.getString("university");
+                                user_studyHabits = documentSnapshot.getString("studyHabits");
+
+                                //update courses array
+                                List<String> tempList = (List<String>) documentSnapshot.get("courses");
+                                tempList.clear();
+                                courses = tempList;
+
+                                //create new userModel with updated course list
+                                UserModel userModel = new UserModel(userId, user_username, user_firstName, user_lastName, user_major, user_university, user_studyHabits, courses);
+
+                                //update user profile with added course
+                                ref.set(userModel)
+                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+                                                Toast.makeText(getApplicationContext(), "Course removed", Toast.LENGTH_SHORT).show();
+                                                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                                            }
+                                        })
+                                        .addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                Toast.makeText(getApplicationContext(), "An error has occured", Toast.LENGTH_SHORT).show();
+                                            }
+                                        });
+                            }
+                        });
+
+
                 //start class search when a college is clicked
                 Toast.makeText(getApplicationContext(), "All classes removed", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(RemoveClasses.this, MainActivity.class);
