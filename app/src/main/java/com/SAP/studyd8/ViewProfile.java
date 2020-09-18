@@ -24,7 +24,7 @@ import java.util.List;
 public class ViewProfile extends AppCompatActivity {
 
     TextView topText, username, name, university, major, studyHabits, courseList;
-    Button addCourses, editProfile;
+    Button addCourses, editProfile, removeCourses;
     private String courses = "";
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -42,6 +42,7 @@ public class ViewProfile extends AppCompatActivity {
         editProfile = (Button) findViewById(R.id.editButton);
         studyHabits = (TextView)findViewById(R.id.studyHabitsText);
         courseList = (TextView)findViewById(R.id.courseListText);
+        removeCourses = (Button)findViewById(R.id.removeCourses);
 
         String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
