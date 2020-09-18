@@ -93,5 +93,13 @@ public class ViewProfile extends AppCompatActivity {
                 finish();
             }
         });
+
+        removeCourses.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), RemoveClasses.class));
+                finish();
+            }
+        });
     }
 }
