@@ -47,6 +47,7 @@ import java.util.Objects;
 
 public class ClassSearch extends AppCompatActivity {
 
+    private final int MAX_COURSE_NUMBER = 7;
     private static final String TAG = "" ;
     String currentUniversity = "";
     String userId, user_username, user_firstName, user_lastName, user_major, user_university, user_studyHabits, currentClassID, currentClassName;
@@ -215,28 +216,36 @@ public class ClassSearch extends AppCompatActivity {
                                     List<String> tempList = (List<String>) documentSnapshot.get("courses");
                                     tempList.add(currentClassID);
                                     tempList.add(currentClassName);
-                                    //String [] temp = (String[]) tempList.toArray();
-                                    courses = tempList;
+                                    int courseSize = tempList.size();
 
-                                    //create new userModel with updated course list
-                                    UserModel userModel = new UserModel(userId, user_username, user_firstName, user_lastName, user_major, user_university, user_studyHabits, courses);
+                                    if(courseSize <= MAX_COURSE_NUMBER) {
+                                        courses = tempList;
 
-                                    //update user profile with added course
-                                    ref.set(userModel)
-                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                @Override
-                                                public void onSuccess(Void aVoid) {
-                                                    Toast.makeText(getApplicationContext(), "Course added", Toast.LENGTH_SHORT).show();
-                                                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                                                }
-                                            })
-                                            .addOnFailureListener(new OnFailureListener() {
-                                                @Override
-                                                public void onFailure(@NonNull Exception e) {
-                                                    Toast.makeText(getApplicationContext(), "An error has occured", Toast.LENGTH_SHORT).show();
-                                                    Log.e(TAG, "onFailure: ", e);
-                                                }
-                                            });
+                                        //create new userModel with updated course list
+                                        UserModel userModel = new UserModel(userId, user_username, user_firstName, user_lastName, user_major, user_university, user_studyHabits, courses);
+
+                                        //update user profile with added course
+                                        ref.set(userModel)
+                                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                    @Override
+                                                    public void onSuccess(Void aVoid) {
+                                                        Toast.makeText(getApplicationContext(), "Course added", Toast.LENGTH_SHORT).show();
+                                                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                                                    }
+                                                })
+                                                .addOnFailureListener(new OnFailureListener() {
+                                                    @Override
+                                                    public void onFailure(@NonNull Exception e) {
+                                                        Toast.makeText(getApplicationContext(), "An error has occured", Toast.LENGTH_SHORT).show();
+                                                        Log.e(TAG, "onFailure: ", e);
+                                                    }
+                                                });
+                                    }
+                                    else
+                                    {
+                                        Toast.makeText(getApplicationContext(), "Max course limit reached, please remove courses", Toast.LENGTH_SHORT).show();
+                                        startActivity(new Intent(getApplicationContext(), MainActivity.class));  //change to remove courses later
+                                    }
                         }
                     });
                 }

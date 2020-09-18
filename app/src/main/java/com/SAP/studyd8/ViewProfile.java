@@ -16,14 +16,17 @@ import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 
+import org.w3c.dom.Text;
+
+import java.util.List;
+
 
 public class ViewProfile extends AppCompatActivity {
 
-    TextView topText, username, name, university, major, studyHabits;
+    TextView topText, username, name, university, major, studyHabits, courseList;
     Button addCourses, editProfile;
-    private String uid;
+    private String courses = "";
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private DocumentReference ref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,19 +41,39 @@ public class ViewProfile extends AppCompatActivity {
         addCourses = (Button) findViewById(R.id.addCourses);
         editProfile = (Button) findViewById(R.id.editButton);
         studyHabits = (TextView)findViewById(R.id.studyHabitsText);
+        courseList = (TextView)findViewById(R.id.courseListText);
 
-        uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
-        ref = db.collection("users").document(uid);
+        DocumentReference ref = db.collection("users").document(uid);
 
         ref.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                assert value != null;
+
+                courses = "";
+                //concatenate all users courses into one String
+                List<String> tempList = (List<String>) value.get("courses");
+                int numberOfCourses = tempList.size();
+                for (int i = 1; i < numberOfCourses; i+=2)
+                {
+                    String temp = tempList.get(i);
+                    if (!courses.equals("")) {
+                        courses += ", ";
+                        courses += temp;
+                    }
+                    else
+                        courses = temp;
+                }
+
+
                 username.setText("Username: " + value.getString("username"));
                 name.setText("Name: " + value.getString("firstName") + " " + value.getString("lastName"));
                 university.setText("University: " + value.getString("university"));
                 major.setText("Major: " + value.getString("major"));
                 studyHabits.setText("Study Habits: "+ value.getString("studyHabits"));
+                courseList.setText("Courses: " + courses);
             }
         });
 
