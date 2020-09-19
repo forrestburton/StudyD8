@@ -39,6 +39,8 @@ public class UniversitySearch extends AppCompatActivity {
     private FirebaseFirestore mFireStore = FirebaseFirestore.getInstance();
     DocumentReference ref;
     String userId, user_username, user_firstName, user_lastName, user_major, user_studyHabits;
+    String changeUniversity = "";
+    private final String profile = "PROFILE";
     List<String> courses;
 
     int images[] = {R.drawable.ucla_logo, R.drawable.ucsb_logo, R.drawable.yale_logo, R.drawable.udub_logo, R.drawable.stanford_logo,
@@ -66,6 +68,13 @@ public class UniversitySearch extends AppCompatActivity {
         {
             UniversityModel universityModel = new UniversityModel(names[i], images[i]);
             universityList.add(universityModel);
+        }
+
+        //Check if this is setting or changing university
+        Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+        if(bundle != null) {
+            changeUniversity = bundle.getString("changeUniversity");
         }
 
         universityAdapter = new CustomAdapter(universityList, this);
@@ -179,8 +188,18 @@ public class UniversitySearch extends AppCompatActivity {
                                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                                     @Override
                                                     public void onSuccess(Void aVoid) {
-                                                        Toast.makeText(getApplicationContext(), "University Selected", Toast.LENGTH_SHORT).show();
-                                                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                                                        //check if need to return to ProfileEdit.java
+                                                        if (changeUniversity.equals(profile)) {
+                                                            Toast.makeText(getApplicationContext(), "University Selected", Toast.LENGTH_SHORT).show();
+
+                                                            Intent intent = new Intent(UniversitySearch.this, ProfileEdit.class);
+                                                            intent.putExtra("currentUniversity", currentUniversity);
+                                                            startActivity(intent);
+                                                        }
+                                                        else {
+                                                            Toast.makeText(getApplicationContext(), "University Selected", Toast.LENGTH_SHORT).show();
+                                                            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                                                        }
                                                     }
                                                 })
                                                 .addOnFailureListener(new OnFailureListener() {

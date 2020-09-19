@@ -30,16 +30,18 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 public class ProfileEdit extends AppCompatActivity {
 
-
+    private final String changeUniversity = "PROFILE";
     EditText firstName, lastName, major, studyHabits;
     TextView username;
     Button finishButton, switchUniversity;
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
     String userId, user_username, user_firstName, user_lastName, user_major, user_university, user_studyHabits;
+    List<String> courses;
     private DatabaseReference myRef;
     private FirebaseDatabase mFirebaseDatabase;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -74,7 +76,12 @@ public class ProfileEdit extends AppCompatActivity {
             }
         });
 
-
+        //see if university was changed
+        Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+        if(bundle != null) {
+            user_university = bundle.getString("currentUniversity");
+        }
 
         finishButton = findViewById(R.id.finishButton);
         try {
@@ -100,7 +107,9 @@ public class ProfileEdit extends AppCompatActivity {
             switchUniversity.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    startActivity(new Intent(getApplicationContext(), UniversitySearch.class));
+                    Intent intent = new Intent(ProfileEdit.this, UniversitySearch.class);
+                    intent.putExtra("changeUniversity", changeUniversity);
+                    startActivity(intent);
                 }
             });
 
@@ -114,27 +123,34 @@ public class ProfileEdit extends AppCompatActivity {
     {
         DocumentReference documentReference = fStore.collection("users").document(userId);
 
-        Map<String, Object> user_data = new HashMap<>();
-     //   user_data.put("username", user_username);
-        user_data.put("firstName", user_firstName);
-        user_data.put("lastName", user_lastName);
-        user_data.put("major", user_major);
-        user_data.put("university", user_university);
-        user_data.put("studyHabits", user_studyHabits);
-        user_data.put("userId", userId);
+        //get courses and username from firestore
+        ref.get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        user_username = documentSnapshot.getString("username");
+                        courses = (List<String>) documentSnapshot.get("courses");
 
-        documentReference.set(user_data).addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void aVoid) {
-                startActivity(new Intent(getApplicationContext(), ViewProfile.class));
-                finish();
+                        //create new userModel with updated course list
+                        UserModel userModel = new UserModel(userId, user_username, user_firstName, user_lastName, user_major, user_university, user_studyHabits, courses);
 
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(getApplicationContext(), "Failed", Toast.LENGTH_SHORT).show();
-            }
-        });
+                        //update user profile with added course
+                        ref.set(userModel)
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        Toast.makeText(getApplicationContext(), "Profile Updated", Toast.LENGTH_SHORT).show();
+                                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Toast.makeText(getApplicationContext(), "An error has occured", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                    }
+                });
+
     }
 }

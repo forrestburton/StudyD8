@@ -56,18 +56,19 @@ public class ViewProfile extends AppCompatActivity {
                 courses = "";
                 //concatenate all users courses into one String
                 List<String> tempList = (List<String>) value.get("courses");
-                int numberOfCourses = tempList.size();
-                for (int i = 1; i < numberOfCourses; i+=2)
-                {
-                    String temp = tempList.get(i);
-                    if (!courses.equals("")) {
-                        courses += ", ";
-                        courses += temp;
-                    }
-                    else
-                        courses = temp;
-                }
 
+                //check courses is initialized
+                if (tempList != null) {
+                    int numberOfCourses = tempList.size();
+                    for (int i = 1; i < numberOfCourses; i += 2) {
+                        String temp = tempList.get(i);
+                        if (!courses.equals("")) {
+                            courses += ", ";
+                            courses += temp;
+                        } else
+                            courses = temp;
+                    }
+                }
 
                 username.setText("Username: " + value.getString("username"));
                 name.setText("Name: " + value.getString("firstName") + " " + value.getString("lastName"));
