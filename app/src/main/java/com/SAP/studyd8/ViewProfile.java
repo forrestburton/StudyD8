@@ -9,6 +9,7 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -19,12 +20,15 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import org.w3c.dom.Text;
 
 import java.util.List;
+import java.util.Objects;
 
 
 public class ViewProfile extends AppCompatActivity {
 
     TextView topText, username, name, university, major, studyHabits, courseList;
     Button addCourses, editProfile, removeCourses;
+    String currentUniversity, userId;
+    DocumentReference ref;
     private String courses = "";
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -46,7 +50,7 @@ public class ViewProfile extends AppCompatActivity {
 
         String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
-        DocumentReference ref = db.collection("users").document(uid);
+        ref = db.collection("users").document(uid);
 
         ref.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
             @Override
@@ -90,8 +94,24 @@ public class ViewProfile extends AppCompatActivity {
         addCourses.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), UniversitySearch.class));
-                finish();
+                //get user id
+                userId = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
+                ref = db.collection("users").document(userId);
+
+                //get user data from firestore
+                ref.get()
+                        .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                            @Override
+                            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                //get current university of user
+                                currentUniversity = documentSnapshot.getString("university");
+
+                                //send current university to ClassSearch.java
+                                Intent intent = new Intent(ViewProfile.this, ClassSearch.class);
+                                intent.putExtra("university",currentUniversity);
+                                startActivity(intent);
+                            }
+                        });
             }
         });
 
