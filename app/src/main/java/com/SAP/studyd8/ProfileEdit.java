@@ -34,9 +34,9 @@ import java.util.Map;
 public class ProfileEdit extends AppCompatActivity {
 
 
-    EditText university, firstName, lastName, major, studyHabits;
+    EditText firstName, lastName, major, studyHabits;
     TextView username;
-    Button finishButton;
+    Button finishButton, switchUniversity;
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
     String userId, user_username, user_firstName, user_lastName, user_major, user_university, user_studyHabits;
@@ -51,7 +51,7 @@ public class ProfileEdit extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_edit);
        // username = findViewById(R.id.profileUsername);
-        university = findViewById(R.id.profileUniversity);
+        switchUniversity = findViewById(R.id.switchUniversityButton);
         firstName = findViewById(R.id.profileFirstName);
         lastName = findViewById(R.id.profileLastName);
         major = findViewById(R.id.profileMajor);
@@ -69,7 +69,6 @@ public class ProfileEdit extends AppCompatActivity {
             //    username.setText(value.getString("username"));
                 firstName.setText(value.getString("firstName"));
                 lastName.setText(value.getString("lastName"));
-                university.setText(value.getString("university"));
                 major.setText(value.getString("major"));
                 studyHabits.setText(value.getString("studyHabits"));
             }
@@ -86,11 +85,22 @@ public class ProfileEdit extends AppCompatActivity {
                     user_firstName = firstName.getText().toString().trim();
                     user_lastName = lastName.getText().toString().trim();
                     user_major = major.getText().toString().trim();
-                    user_university = university.getText().toString().trim();
                     user_studyHabits = studyHabits.getText().toString().trim();
 
                     addUserData();
 
+                }
+            });
+
+        } catch (Exception e) {
+            Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+
+        try {
+            switchUniversity.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    startActivity(new Intent(getApplicationContext(), UniversitySearch.class));
                 }
             });
 

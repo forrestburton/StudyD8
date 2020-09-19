@@ -12,6 +12,7 @@
         android:layout_width="370dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
+        android:layout_marginStart="20dp"
         android:textColor="@android:color/black"
         android:text="Edit Your profile"
         android:fontFamily="monospace"
@@ -24,24 +25,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
 
-    <TextView
-        android:id="@+id/firstText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:fontFamily="monospace"
-        android:layout_marginTop="4dp"
-        android:textColor="@android:color/black"
-        android:text="First Name:"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/profileTopText"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.141"/>
+
 
     <TextView
         android:id="@+id/secondText"
@@ -49,12 +33,12 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:fontFamily="monospace"
-        android:layout_marginTop="31dp"
+        android:layout_marginTop="54dp"
         android:textColor="@android:color/black"
-        android:text="Last Name: "
+        android:text="First Name:"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintTop_toBottomOf="@id/firstText"
+        app:layout_constraintTop_toBottomOf="@id/profileTopText"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -68,9 +52,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:fontFamily="monospace"
-        android:layout_marginTop="57dp"
+        android:layout_marginTop="80dp"
         android:textColor="@android:color/black"
-        android:text="University:"
+        android:text="Last Name:"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -87,7 +71,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:fontFamily="monospace"
-        android:layout_marginTop="83dp"
+        android:layout_marginTop="106dp"
         android:textColor="@android:color/black"
         android:text="Major:"
         android:textSize="18sp"
@@ -106,7 +90,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:fontFamily="monospace"
-        android:layout_marginTop="110dp"
+        android:layout_marginTop="141dp"
         android:textColor="@android:color/black"
         android:text="Study\nHabits:"
         android:textSize="18sp"
@@ -119,45 +103,28 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.33"/>
 
+
     <EditText
         android:id="@+id/profileFirstName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="140dp"
-        android:layout_marginTop="0dp"
-        android:layout_marginEnd="10dp"
-        android:ems="10"
+        android:layout_marginTop="70dp"
         android:fontFamily="monospace"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="330dp"
+        android:ems="10"
         android:hint="Enter your first name"
         android:inputType="textPersonName"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/profileTopText"
-        app:layout_constraintVertical_bias="0.008" />
-
-    <EditText
-        android:id="@+id/profileLastName"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="140dp"
-        android:layout_marginTop="4dp"
-        android:fontFamily="monospace"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="330dp"
-        android:ems="10"
-        android:hint="Enter your last name"
-        android:inputType="textPersonName"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profileFirstName"
+        app:layout_constraintTop_toBottomOf="@+id/profileTopText"
         app:layout_constraintVertical_bias="0" />
 
     <EditText
-        android:id="@+id/profileUniversity"
+        android:id="@+id/profileLastName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="140dp"
@@ -165,14 +132,14 @@
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="230dp"
         android:ems="10"
-        android:hint="Enter Your University"
+        android:hint="Enter your last name"
         android:fontFamily="monospace"
         android:inputType="textPersonName"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profileLastName"
+        app:layout_constraintTop_toBottomOf="@+id/profileFirstName"
         app:layout_constraintVertical_bias="0.0" />
 
     <EditText
@@ -185,13 +152,13 @@
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="330dp"
         android:ems="10"
-        android:hint="Enter Your Major"
+        android:hint="Enter your major"
         android:inputType="textPersonName"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profileUniversity"
+        app:layout_constraintTop_toBottomOf="@+id/profileLastName"
         app:layout_constraintVertical_bias="0.0" />
 
     <EditText
@@ -204,7 +171,7 @@
         android:fontFamily="monospace"
         android:layout_marginBottom="330dp"
         android:ems="10"
-        android:hint="Enter Your Study Habits"
+        android:hint="Enter your study habits"
         android:inputType="textPersonName"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -220,12 +187,27 @@
         android:layout_marginStart="162dp"
         android:layout_marginTop="0dp"
         android:layout_marginEnd="162dp"
-        android:text="Finish"
+        android:text="Submit\nChanges"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/profileStudyHabits"
         app:layout_constraintVertical_bias="0.16" />
+
+    <Button
+        android:id="@+id/switchUniversityButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="122dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="122dp"
+        android:text="Switch Universities"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/profileTopText"
+        app:layout_constraintVertical_bias="0.02" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
