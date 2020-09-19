@@ -15,12 +15,21 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.List;
+import java.util.Objects;
 
 import static com.google.firebase.auth.FirebaseAuth.getInstance;
 
 public class MainActivity extends AppCompatActivity {
     TextView welcomeText, unverifiedText, editProfile, courseSearch, StudyBuds, messages;
     FirebaseAuth fAuth;
+    private FirebaseFirestore mFireStore = FirebaseFirestore.getInstance();
+    DocumentReference ref;
+    String currentUniversity, userId;
     Button logoutButton,resendEmailButton;
     //  boolean has
     @SuppressLint("SetTextI18n")
@@ -94,7 +103,24 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View view)
                 {
-                    startActivity(new Intent(getApplicationContext(), UniversitySearch.class));
+                    //get user id
+                    userId = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
+                    ref = mFireStore.collection("users").document(userId);
+
+                    //get user data from firestore
+                    ref.get()
+                            .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                @Override
+                                public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                    //get current university of user
+                                    currentUniversity = documentSnapshot.getString("university");
+
+                                    //send current university to ClassSearch.java
+                                    Intent intent = new Intent(MainActivity.this, ClassSearch.class);
+                                    intent.putExtra("university",currentUniversity);
+                                    startActivity(intent);
+                                }
+                            });
                 }
             });
 

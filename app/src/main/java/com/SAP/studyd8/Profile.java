@@ -45,9 +45,9 @@ public class Profile extends AppCompatActivity {
     EditText university_text, username_text, firstName_text, lastName_text, major_text, studyHabits_text;
     Button finishButton;
     FirebaseAuth fAuth;
-    CollectionReference userRef;
     FirebaseFirestore fStore;
-    String userId, username, firstName, lastName, major, university, studyHabits;
+    String username, userId, firstName, lastName, major, studyHabits;
+    String university = "";
     List<String> courses;
 
     @Override
@@ -55,7 +55,6 @@ public class Profile extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
         username_text = findViewById(R.id.profileUsername);
-        university_text = findViewById(R.id.profileUniversity);
         firstName_text = findViewById(R.id.profileFirstName);
         lastName_text = findViewById(R.id.profileLastName);
         major_text = findViewById(R.id.profileMajor);
@@ -78,7 +77,6 @@ public class Profile extends AppCompatActivity {
                     firstName = firstName_text.getText().toString().trim();
                     lastName = lastName_text.getText().toString().trim();
                     major = major_text.getText().toString().trim();
-                    university = university_text.getText().toString().trim();
                     studyHabits = studyHabits_text.getText().toString().trim();
 
                     // username contains only letters and numbers
@@ -133,6 +131,6 @@ public class Profile extends AppCompatActivity {
         documentReference.set(userModel);
 
         Toast.makeText(getApplicationContext(), "success", Toast.LENGTH_SHORT).show();
-        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+        startActivity(new Intent(getApplicationContext(), UniversitySearch.class));
     }
 }

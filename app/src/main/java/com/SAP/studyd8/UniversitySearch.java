@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,15 +18,28 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class UniversitySearch extends AppCompatActivity {
 
     ListView lvUniversities;
     CustomAdapter universityAdapter;
+    private FirebaseFirestore mFireStore = FirebaseFirestore.getInstance();
+    DocumentReference ref;
+    String userId, user_username, user_firstName, user_lastName, user_major, user_studyHabits;
+    List<String> courses;
 
     int images[] = {R.drawable.ucla_logo, R.drawable.ucsb_logo, R.drawable.yale_logo, R.drawable.udub_logo, R.drawable.stanford_logo,
             R.drawable.westwash_logo, R.drawable.daffodil_logo, R.drawable.harvard_logo, R.drawable.alberta_logo, R.drawable.hopkins_logo,
@@ -136,19 +150,49 @@ public class UniversitySearch extends AppCompatActivity {
             universityView.setImageResource(universitiesFiltered.get(position).getImage());
             universityName.setText(universitiesFiltered.get(position).getName());
 
-            //get Name of University Selected ***THIS IS WHERE I STORE IN FIREBASE AND START NEXT ACTIVITY???*****
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    String currentUniversity = universitiesFiltered.get(position).getName();
+                    final String currentUniversity = universitiesFiltered.get(position).getName();
 
-                    //start class search when a college is clicked
-                    Intent intent = new Intent(UniversitySearch.this, ClassSearch.class);
-                    intent.putExtra("university",currentUniversity);
-                    startActivity(intent);
+                    //get user id
+                    userId = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
+                    ref = mFireStore.collection("users").document(userId);
+
+                    //get user data from firestore
+                    ref.get()
+                            .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                @Override
+                                public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                    user_username = documentSnapshot.getString("username");
+                                    user_firstName = documentSnapshot.getString("firstName");
+                                    user_lastName = documentSnapshot.getString("lastName");
+                                    user_major = documentSnapshot.getString("major");
+                                    user_studyHabits = documentSnapshot.getString("studyHabits");
+                                    courses = (List<String>) documentSnapshot.get("courses");
+
+                                    //create new userModel with updated course list
+                                    UserModel userModel = new UserModel(userId, user_username, user_firstName, user_lastName, user_major, currentUniversity, user_studyHabits, courses);
+
+                                        //update user profile with added course
+                                        ref.set(userModel)
+                                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                    @Override
+                                                    public void onSuccess(Void aVoid) {
+                                                        Toast.makeText(getApplicationContext(), "University Selected", Toast.LENGTH_SHORT).show();
+                                                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                                                    }
+                                                })
+                                                .addOnFailureListener(new OnFailureListener() {
+                                                    @Override
+                                                    public void onFailure(@NonNull Exception e) {
+                                                        Toast.makeText(getApplicationContext(), "An error has occured", Toast.LENGTH_SHORT).show();
+                                                    }
+                                                });
+                                }
+                            });
                 }
             });
-
             return view;
         }
 

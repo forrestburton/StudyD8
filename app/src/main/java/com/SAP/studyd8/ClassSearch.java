@@ -41,6 +41,7 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -213,7 +214,11 @@ public class ClassSearch extends AppCompatActivity {
                                     user_studyHabits = documentSnapshot.getString("studyHabits");
 
                                     //update courses array
-                                    List<String> tempList = (List<String>) documentSnapshot.get("courses");
+                                    List<String> tempList = null;
+                                    tempList = (List<String>) documentSnapshot.get("courses");
+                                    if (tempList==null){
+                                        tempList = new ArrayList<String>();
+                                    }
                                     tempList.add(currentClassID);
                                     tempList.add(currentClassName);
                                     int courseSize = tempList.size();
