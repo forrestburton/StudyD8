@@ -42,6 +42,7 @@ public class ProfileEdit extends AppCompatActivity {
     FirebaseFirestore fStore;
     String userId, user_username, user_firstName, user_lastName, user_major, user_university, user_studyHabits;
     List<String> courses;
+    Bundle bundle;
     private DatabaseReference myRef;
     private FirebaseDatabase mFirebaseDatabase;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -63,6 +64,10 @@ public class ProfileEdit extends AppCompatActivity {
         fAuth = FirebaseAuth.getInstance();
         userId = fAuth.getCurrentUser().getUid();
 
+        //see if university was changed
+        Intent intent = getIntent();
+        bundle = intent.getExtras();
+
         ref = db.collection("users").document(userId);
 
         ref.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
@@ -73,15 +78,16 @@ public class ProfileEdit extends AppCompatActivity {
                 lastName.setText(value.getString("lastName"));
                 major.setText(value.getString("major"));
                 studyHabits.setText(value.getString("studyHabits"));
+
+                //if university was changed, then get new university. Otherwise, keep current university
+                if(bundle != null) {
+                    user_university = bundle.getString("currentUniversity");
+                }
+                else {
+                    user_university = value.getString("university");
+                }
             }
         });
-
-        //see if university was changed
-        Intent intent = getIntent();
-        Bundle bundle = intent.getExtras();
-        if(bundle != null) {
-            user_university = bundle.getString("currentUniversity");
-        }
 
         finishButton = findViewById(R.id.finishButton);
         try {
