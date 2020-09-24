@@ -1,5 +1,5 @@
 # StudyD8 
-An Android application which helps college students find study partners in classes
+An Android application which helps college students find study partners in classes. Built on Android Studio
 
 See our website here: http://studyd8.com/
 
