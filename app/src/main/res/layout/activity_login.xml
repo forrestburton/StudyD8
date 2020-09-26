@@ -80,14 +80,14 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/loginButton"
-        app:layout_constraintVertical_bias="0.58" />
+        app:layout_constraintVertical_bias="0.48" />
 
     <Button
         android:id="@+id/loginRegisterButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="196dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="197dp"
         android:layout_marginBottom="118dp"
         android:text="Register"
@@ -102,7 +102,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="174dp"
-        android:layout_marginTop="59dp"
+        android:layout_marginTop="0dp"
         android:layout_marginEnd="179dp"
         android:layout_marginBottom="67dp"
         android:text="Forgot your password?"

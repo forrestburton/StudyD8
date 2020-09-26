@@ -10,7 +10,8 @@
         android:supportsRtl="true"
         android:testOnly="false"
         android:theme="@style/AppTheme">
-        <activity android:name=".RemoveClasses"></activity>
+        <activity android:name=".MatchList"></activity>
+        <activity android:name=".RemoveClasses" />
         <activity android:name=".ProfileEdit" />
         <activity android:name=".AddClass" />
         <activity android:name=".ViewProfile" />
