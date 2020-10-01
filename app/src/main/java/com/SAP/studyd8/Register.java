@@ -5,11 +5,16 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.Spanned;
 import android.text.TextUtils;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -24,6 +29,7 @@ public class Register extends AppCompatActivity {
     EditText regUserEmail,regUserPassword,regUserConfirmPassword;
     Button regButton,regLoginButton;
     FirebaseAuth fAuth;
+    TextView termsOfService, privacyPolicy;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +41,12 @@ public class Register extends AppCompatActivity {
         regUserEmail = findViewById(R.id.regUserEmail);
         regButton = findViewById(R.id.regButton);
         regLoginButton = findViewById(R.id.regLoginButton);
+        termsOfService = findViewById(R.id.regText);
+        privacyPolicy = findViewById(R.id.regText2);
         fAuth = FirebaseAuth.getInstance();
+
+        termsOfService.setMovementMethod(LinkMovementMethod.getInstance());
+        privacyPolicy.setMovementMethod(LinkMovementMethod.getInstance());
 
         regLoginButton.setOnClickListener(new View.OnClickListener() {
             @Override
