@@ -6,11 +6,24 @@
     android:layout_height="match_parent"
     tools:context=".Register">
 
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="140dp"
+        android:layout_height="125dp"
+        android:layout_centerVertical="true"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/studyd8_logo"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
     <TextView
         android:id="@+id/registerTopText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="monospace"
+        android:layout_marginTop="135dp"
         android:text="Register"
         android:textSize="36sp"
         android:textColor="@android:color/black"
@@ -42,7 +55,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="45dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="291dp"
         android:ems="10"
@@ -59,6 +72,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="196dp"
         android:ems="10"
@@ -68,7 +82,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/regUserPassword"
-        app:layout_constraintVertical_bias="0.17000002" />
+        app:layout_constraintVertical_bias="0" />
 
     <Button
         android:id="@+id/regButton"
