@@ -7,7 +7,6 @@ An Android application which helps college students find study partners in class
 
 •	Created a search feature to help users find specific universities and classes
 
-•	And more features 
 
 
 See our website here: http://studyd8.com/
