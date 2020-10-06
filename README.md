@@ -1,6 +1,6 @@
 # StudyD8 
 An Android application which helps college students find study partners in classes. Built on Android Studio
-•	Utilized data verification to implement user authentication and client-side login 
+•	Utilized data verification to implement user authentication and client-side login\n
 •	Successfully stored and processed user data to create student matches
 •	Created a search feature to help users find specific universities and classes
 •	And more features 
