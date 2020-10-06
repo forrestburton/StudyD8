@@ -9,6 +9,7 @@ An Android application which helps college students find study partners in class
 
 •	And more features 
 
+
 See our website here: http://studyd8.com/
 
 Some preview images:
