@@ -2,6 +2,8 @@
 (In Progress)
 An Android application which helps college students find study partners in classes. Built on Android Studio. I mainly focused on the backend functionality of the app rather than the look so if anyone experienced in UI/UX design wants to clean it up please contact me
 
+Some of what I accomplished creating the app:
+
 •	Utilized data verification to implement user authentication and client-side login
 
 •	Successfully stored and processed user data to create student matches
