@@ -1,7 +1,5 @@
 # StudyD8 
-(In Progress)
 An Android application which helps college students find study partners in classes. Built on Android Studio. 
-I mainly focused on the backend functionality of the app rather than the look so if anyone experienced in UI/UX design wants to clean it up please contact me
 
 Some of what I accomplished creating the app:
 
