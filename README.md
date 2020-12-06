@@ -5,7 +5,7 @@ Some of what I accomplished creating the app:
 
 •	Utilized data verification to implement user authentication and client-side login
 
-•	Successfully stored and processed user data to create student matches
+•	Successfully stored, retrieved, and processed user data to create student matches and display user info
 
 •	Created a search feature to help users find specific universities and classes
 
